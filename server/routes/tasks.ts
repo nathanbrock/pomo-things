@@ -5,23 +5,14 @@ const THINGS_AUTH_TOKEN = process.env.THINGS_AUTH_TOKEN;
 
 const open = require('open');
 
-import { getDB } from '../things';
+import { getTasksByProject } from '../things';
 
 type GetRequest = FastifyRequest<{
     Querystring: { projectId: String };
 }>
 const getHandler = async (request: GetRequest) => {
-    const db = await getDB();
     const { projectId } = request.query
-    const result = await db.all(`
-        SELECT uuid, title
-        FROM TMTask
-        WHERE(
-        (project = '${projectId}' AND type = 0) OR
-        (actionGroup IN(SELECT uuid FROM TMTask WHERE project = '${projectId}' and type = 2 ORDER BY \`index\` ASC))
-        ) AND trashed = 0 AND status = 0
-        ORDER BY \`index\` DESC`);
-
+    const result = await getTasksByProject(projectId);
     return result || [];
 }
 
@@ -36,7 +27,7 @@ const patchHandler = async (request: PatchRequest, reply: FastifyReply) => {
     return {};
 }
 
-export default function (fastify: FastifyInstance, _: FastifyPluginOptions, done: () => void) {
+const mountTaskEndppints = (fastify: FastifyInstance, _: FastifyPluginOptions, done: () => void) => {
     const getOpts = {
         schema: {
             querystring: {
@@ -57,3 +48,5 @@ export default function (fastify: FastifyInstance, _: FastifyPluginOptions, done
 
     done();
 }
+
+export default mountTaskEndppints;

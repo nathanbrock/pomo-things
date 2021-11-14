@@ -1,22 +1,16 @@
-import { FastifyInstance, FastifyPluginCallback, FastifyPluginOptions, FastifyRequest } from 'fastify';
-import { getDB } from '../things';
+import { FastifyInstance, FastifyPluginOptions, FastifyRequest } from 'fastify';
+import { getProjectByArea } from '../things';
 
 type GetRequest = FastifyRequest<{
     Querystring: { areaId: String };
 }>
-
 const getHandler = async (request: GetRequest) => {
-    const db = await getDB();
     const { areaId } = request.query
-
-    let areaWhereCondition = areaId === "0" ? 'area IS NULL' : `area = '${areaId}'`;
-
-    const result = await db.all(`SELECT uuid, type, title, area FROM TMTask WHERE type = 1 and status = 0 and trashed = 0 and ${areaWhereCondition} ORDER BY \`index\` ASC`);
-
+    const result = await getProjectByArea(areaId);
     return result;
 }
 
-export default function (fastify: FastifyInstance, _: FastifyPluginOptions, done: () => void) {
+const mountProjectEndpoints = (fastify: FastifyInstance, _: FastifyPluginOptions, done: () => void) => {
     const getOpts = {
         schema: {
             querystring: {
@@ -35,3 +29,5 @@ export default function (fastify: FastifyInstance, _: FastifyPluginOptions, done
     fastify.get('/projects', getOpts, getHandler);
     done();
 }
+
+export default mountProjectEndpoints;
