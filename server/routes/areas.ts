@@ -1,8 +1,12 @@
 import { FastifyInstance, FastifyPluginOptions } from 'fastify';
 import { getAreas } from '../things';
 
-const getHandler = async () => {
-    const result = await getAreas();
+type ThingsArea = {
+    uuid: String,
+    title: String
+};
+export const getHandler = async (): Promise<ThingsArea[]> => {
+    const result: ThingsArea[] = await getAreas();
     return result;
 }
 
