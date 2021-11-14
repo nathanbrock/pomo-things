@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+
+import ThingsPomo from './components/App';
+import * as thingsService from './ThingsService';
 import reportWebVitals from './reportWebVitals';
+
+import './index.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThingsPomo thingsService={thingsService} />
   </React.StrictMode>,
   document.getElementById('root')
 );

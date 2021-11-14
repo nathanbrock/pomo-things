@@ -1,0 +1,68 @@
+.App {
+  max-width: 500px;
+  background-color: white;
+  margin: 0 auto;
+  color: #383b3f;
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+
+.App .nav-link {
+  width: 100%;
+  display: block;
+  text-align: left;
+}
+
+.projects-list {
+  margin-left: 10px;
+}
+
+.tasks-list {
+  margin-left: 20px;
+}
+
+.nav-pills .nav-link.list-active {
+  background-color: #e1e4e8 !important;
+  color: #383b3f !important;
+}
+
+.pomo {
+  padding-left: 15px;
+}
+
+.pomobar {
+  background-color: #ccc;
+  width: 100%;
+  height: 5px;
+  border-radius: 2px;
+}
+
+.pomobar-complete {
+  background-color: var(--bs-danger);
+  width: 0%;
+  height: 5px;
+  display: block;
+  -webkit-transition: width 1s linear;
+  -moz-transition: width 1s linear;
+  -o-transition: width 1s linear;
+  transition: width 1s linear;
+  position: relative;
+}
+
+.pomobar-highlight {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 15px;
+  background-color: var(--bs-danger);
+  float: right;
+  margin-top: -2.5px;
+}
+
+.w-80 {
+  width: 80%;
+}
+
+.w-20 {
+  width: 20%;
+}
